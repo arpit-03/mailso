@@ -1,0 +1,87 @@
+<div id="emailcenter" style="background-color: #F7F7F7">
+	<h3 style="    color: #72879b;
+    border-bottom: 2px solid #E6E9ED;
+    padding-bottom: 10px;">Bulk Email Center</h3>
+	<div id='emailcenter1'>
+		
+<%=form_for @request ,url: create_request_path,method: 'post' do |r| %>
+<div class='form-group'>
+<%=r.label :from%>
+<%=r.text_field :from , class: "form-control" %>
+</div>
+
+<br>
+<%=r.label :body%>
+<%=r.text_area :body,id:'froala-editor'%>
+<br>
+
+<div style="display: flex;width: 100%;overflow: hidden;"><button type="button" id="file2" style="    color: #655d5d;
+    font-size: 14px;
+    font-weight: 800;
+">Upload Csv File</button><div id="b1" style="overflow: hidden;width: 44%;"><p id="b2"></p></div>
+</div>
+<%= r.file_field :cfile ,class:'filefield' ,id: 'filefield1'%>
+<br>
+<br>
+<%=r.submit"SUBMIT" ,class:'btn btn-info'%>
+<br>
+<%end%>
+</div>
+</div>
+<script >
+	 new FroalaEditor('#froala-editor', {
+  toolbarButtons: {
+  'moreText': {
+    'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+  },
+  'moreParagraph': {
+    'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+  },
+  'moreRich': {
+    'buttons': ['insertLink', 'insertImage','insertFile', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly', 'insertHR']
+  },
+  'moreMisc': {
+    'buttons': ['undo', 'redo', 'fullscreen', 'print', 'getPDF', 'spellChecker', 'selectAll', 'html'],
+    'align': 'right',
+    'buttonsVisible': 2
+  }
+},
+ imageUploadURL: '<%=upload_image_path%>',
+  imageUploadParams: {
+        id: 'my_editor'
+      },
+      videoUploadURL: '/upload_video',
+
+      videoUploadParams: {
+        id: 'my_editor2'
+      },
+        fileUploadURL: '/upload_file',
+
+      fileUploadParams: {
+        id: 'my_editor3'
+      }
+
+  
+
+
+    
+  });
+   $('#file2').on('click',function(){
+
+$('#filefield1').click();
+
+  })
+  $('#filefield1').on('change',function(){
+    $('#b2').remove();
+    $('#b1').append("<p id='b2'></p>");
+    var a=$('#filefield1')[0].value;
+    var b="";
+    for(let i=0;i<a.length;i++){
+      if(a.charCodeAt(i)!=92)
+      b=b+a[i];
+    else
+    b="";
+    }
+$('#b2').append(b);
+  })
+</script>

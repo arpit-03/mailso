@@ -1,0 +1,277 @@
+<div class='pagec'>
+  <div id='ico1'>
+	<i class="fas fa-check" id='check1'></i>
+  <i class="fas fa-times" id='cancel1'></i>
+  <i class="fas fa-trash" id='del1'></i>
+</div>
+<table id="rtable"  data-turbolinks="false" class="table table-striped table-bordered display responsive no-wrap" style="width:100%">
+	<thead>
+		<tr>
+			<th><input type="checkbox" id="selectall"> Select All</th>
+			<th>Request ID</th>
+			<th>User ID</th>
+			<th>Username</th>
+			<th>From</th>
+			<th>Contents</th>
+			<th>CSV</th>
+			<th>Uploaded_at</th>
+			<th>Status</th>
+
+
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+ <tfoot class="text-primary">
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
+</div>
+<script >
+  $(document).ready(function(){
+	var table=$('#rtable').DataTable({
+		 "processing": true,
+        "serverSide": true,
+        "responsive": true,
+         "select": true,
+        "ajax": "<%=@basel%>/api/v1/admin/user/m",
+   "columns": [
+   {"data": "DT_RowId"},
+            { "data": "id" },
+            { "data": "Userid" },
+            { "data": "Username" },
+            { "data": "from" },
+            { "data": "body" },
+            { "data": "csv" },
+            { "data": "uploaded_at" },
+            {"data":"status"},
+            
+            
+        ],
+         "columnDefs": [
+          {
+   'targets': 0,
+   'searchable':false,
+   'orderable':false,
+   'className': 'dt-body-center',
+   'render': function (data, type, full, meta){
+       return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+   }
+ },
+   {
+    'targets':[5,6] ,
+   'searchable':false,
+   'orderable':false,
+   }
+            
+
+            
+        ],
+ 'order': [[1, 'asc']],
+  initComplete: function () {
+  console.log('it');
+            this.api().columns([8]).every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                           var val = $(this).val();
+                           console.log(val);
+                    column.search(this.value).draw();
+                } );
+  console.log(column.data().unique());
+                    
+  select.append( '<option value="processing">processing</option>' )
+ select.append( '<option value="approved">approved</option>' )
+ select.append( '<option value="declined">declined</option>' )
+                
+            } );
+
+    this.api().columns([7]).every( function () {
+        var column1 = this;
+var select1= '<div id="fromto"><input type="text" id="from" placeholder="from" autocomplete="off"><input type="text" id="to" placeholder="to" autocomplete="off"></div>';
+$(select1).appendTo($(column1.footer()).empty());
+ $('#from').on('change',function(){
+console.log('a');
+  column1.search("F"+$('#from')[0].value+"T"+$('#to')[0].value).draw();
+ });
+    
+ $('#to').on('change',function(){
+console.log('a');
+  column1.search("F"+$('#from')[0].value+"T"+$('#to')[0].value).draw();
+ });
+
+    } );
+ 
+        
+  $( function() {
+    var dateFormat = "yy-mm-dd",
+      from = $( "#from" )
+        .datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 1,
+          dateFormat: dateFormat
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#to" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 1,
+          dateFormat: dateFormat
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+ 
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+ 
+      return date;
+    }
+  } );
+        }   
+	});
+
+$('#selectall').on('click', function(){
+   // Get all rows with search applied
+   var el = $('#selectall').get(0);
+   var rows = table.rows({ 'search': 'applied' }).nodes();
+   console.log(rows);
+   if(el.checked==true){
+   
+   // Check/uncheck checkboxes for all rows in the table
+   $('input[type="checkbox"]', rows).prop('checked', this.checked);
+   for(let i=0 ; i<rows.length;++i){
+    if(!$('#'+rows[i].id).hasClass('selected'))
+    $('#'+rows[i].id).toggleClass('selected');
+   }
+  }
+  else{
+    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+ for(let i=0 ; i<rows.length;++i){
+    if($('#'+rows[i].id).hasClass('selected'))
+    $('#'+rows[i].id).toggleClass('selected');
+   }
+  }
+});
+$('#rtable tbody').on('change', 'input[type="checkbox"]', function(){
+   // If checkbox is not checked
+   if(!this.checked){
+      var el = $('#selectall').get(0);
+      // If "Select all" control is checked and has 'indeterminate' property
+      if(el.checked==true)
+      el.checked=false;
+     
+       $('#'+this.value).toggleClass('selected');
+      }
+   
+   else{
+    $('#'+this.value).toggleClass('selected');
+   }
+});
+
+$('#check1').on('click',function(){
+  var t = $('.selected')
+  var t1=[];
+  for(let i=0 ; i<t.length;++i){
+t1[i]=t[i].id
+  }
+  $.ajax({
+    
+    url: '<%=msend_path%>' ,
+
+    data: {
+      'id': t1
+    },
+    
+    success: function(){
+ console.log('yup');
+table.draw();
+    },
+  });
+});
+$('#cancel1').on('click',function(){
+  var t = $('.selected')
+  var t1=[];
+  for(let i=0 ; i<t.length;++i){
+t1[i]=t[i].id
+  }
+  $.ajax({
+    
+    url: '<%=mcancel_path%>' ,
+
+    data: {
+      'id': t1
+    },
+    
+    success: function(){
+ console.log('yup');
+table.draw();
+    },
+  });
+});
+
+
+$('#del1').on( 'click', function () {
+if (confirm('Are you sure you want to delete rows')) {
+    // Save it!
+
+    // Do nothing!
+
+  var t=$('.selected');
+  var t1=[];
+  for(let i=0 ; i<t.length;++i){
+t1[i]=t[i].id
+  }
+  $.ajax({
+    
+    url: '<%=mdel_path%>' ,
+    data: {
+      'id': t1
+    },
+    
+    success: function(){
+ table.row( '.selected' ).remove().draw();
+
+new Noty({
+  type:'success',
+    text: 'Request Deletion Succesfull',
+    timeout: 2000,
+    animation: {
+        open: 'animated bounceInRight', // Animate.css class names
+        close: 'animated bounceOutRight' // Animate.css class names
+    }
+}).show();
+    },
+  });}
+    } );
+document.addEventListener("turbolinks:before-cache", function() {
+  if (table !== null) {
+   table.destroy();
+   table = null;
+  }
+});
+
+
+
+});
+</script>

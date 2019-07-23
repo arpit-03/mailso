@@ -1,0 +1,3 @@
+<div id="graph2"  class='animated fadeIn'>
+      <%= area_chart Emailstatus.where(clicked: true).group_by_day(:clicked_at).count ,xtitle: "Time", ytitle:"Clicked",colors: ["#2a3f53"]%>
+  </div>

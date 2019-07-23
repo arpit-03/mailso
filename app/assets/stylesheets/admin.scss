@@ -1,0 +1,73 @@
+// Place all the styles related to the admin controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#div{
+	    display: flex;
+    justify-content: space-around;
+    /* text-align: center; */
+    height: 20vh;
+    margin-top: 5vh;
+}
+#div1{
+	 border-radius: 60%;
+        background-color: #54a8d0;
+    width: 20vw;
+    height: 20vh;
+    text-align: center;
+    /* align-items: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     a:active {
+    color: white !important;
+    text-decoration: none !important;
+}
+a:link {
+color: white !important;
+    text-decoration: none !important;
+}
+ a:visited {
+color: white !important;
+    text-decoration: none !important;
+}
+ a:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+}
+#div2{
+	 border-radius: 60%;
+        background-color: #54a8d0;
+    width: 20vw;
+    height: 20vh;
+    text-align: center;
+    /* align-items: center; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a:active {
+    color: white !important;
+    text-decoration: none !important;
+}
+a:link {
+color: white !important;
+    text-decoration: none !important;
+}
+ a:visited {
+color: white !important;
+    text-decoration: none !important;
+}
+ a:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+}
+
+.aligncenter{
+    text-align: center;
+}
+.red{
+    color: red;
+}

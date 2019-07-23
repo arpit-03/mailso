@@ -1,0 +1,2 @@
+<div id="graph2"  class='animated fadeIn'>
+<%= area_chart Request.group_by_day(:uploaded_at).count ,xtitle: "Time", ytitle:"Requests",colors: ["#2a3f53"]%></div>

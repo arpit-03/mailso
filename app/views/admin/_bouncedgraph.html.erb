@@ -1,0 +1,3 @@
+<div id="graph2" class='animated fadeIn'>
+<%= area_chart Emailstatus.where(bounced: true).group_by_day(:bounced_at).count ,xtitle: "Time", ytitle:"Bounced",colors: ["#2a3f53"]%>
+</div>

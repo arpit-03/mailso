@@ -1,0 +1,155 @@
+
+<div class='pagec'>
+
+<h3 class='pheader'>Edit <%=@sub.page_name%> Page</h3>
+<div class='formcw'>
+<div class='formc'>
+<%=form_for @sub ,url:sub_update_path(@sub.id) , method: 'post' do |f|%>
+<div id="pg_name_div" class="form-group">
+  <h2 class='stylet'>Contents</h2>
+  <div style='margin-top:20px'>
+<%=f.label :page_name,'Page Name'%>
+<%=f.text_field :page_name, class: "edit form-control" %><br>
+</div>
+<div class="form-group">
+<%=f.label :title%>
+<%=f.text_field :title, class: "edit form-control"%><br>
+</div>
+<div class="form-group">
+<%=f.label :short_description%>
+<%=f.text_area :sh_desc, class: "edit form-control"%><br>
+</div>
+
+<%=f.label :long_description%>
+<%=f.text_area :lg_desc , id: "froala-editor"%>
+
+<br>
+
+<div class="form-check">
+<%=f.label :status%><br>
+<%=f.radio_button :status ,'active', checked: true,class: "form-check-input" %>
+<%=f.label :active%><br>
+<%=f.radio_button :status ,'inactive',class: "form-check-input" %>
+<%=f.label :inactive%>
+</div>
+</div>
+</div>
+<div class='metac'>
+  <h2 class='stylet'>Meta Tags</h2>
+  <div style='margin-top:20px'>
+<div class="form-group">
+<%=f.label :meta_title%>
+<%=f.text_field :meta_title , class: "edit form-control"%><br>
+</div>
+<div class="form-group">
+<%=f.label :meta_property%>
+<%=f.text_area :meta_property, class: "edit form-control"%><br>
+</div>
+<div class="form-group">
+<%=f.label :meta_content%>
+<%=f.text_area :meta_content , class: "edit form-control"%><br>
+</div>
+<%=f.submit "SUBMIT", id:'submit_btn',class: "btn btn-info "%>
+<% end%>
+</div>
+</div>
+</div>
+</div>
+<script>
+var message= '*Page Name cannot be Blank'
+var text=$('<p>',{
+  'html': message,
+  'class' : 'red',
+  'id':'text_append',
+});
+
+  var editelements=$('.edit');
+  editelements.each(function(){
+var page_name= $(this);
+  page_name.on('keyup', function () {
+
+
+ console.log(this.id);
+
+  if ((page_name).val()==""){
+if(this.id=='sub_page_name')
+{$('#pg_name_div').append(text);
+$( "#submit_btn" ).prop( "disabled", true );}
+else
+$( "#submit_btn" ).prop( "disabled", true );
+  }
+  else
+  {  if($('#text_append'))
+$('#text_append').remove();
+    if(checkall(this))
+    $( "#submit_btn" ).prop( "disabled", false );
+   
+  }
+}); 
+
+  page_name_val=page_name.val();
+  page_name.on ('cut',function(){
+    if(page_name.val()!=page_name_val){
+        if(checkall(this))
+        $( "#submit_btn" ).prop( "disabled", false );
+    }
+    else
+      $( "#submit_btn" ).prop( "disabled", true );
+  }
+
+    );
+});
+ 
+ function checkall(e){
+  var a= true;
+editelements.each(function(e){
+if(this != e){
+  if($(this).val()=="")
+a=false;
+}
+}
+
+  );
+return a;
+ }
+  new FroalaEditor('#froala-editor', {
+  toolbarButtons: {
+  'moreText': {
+    'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+  },
+  'moreParagraph': {
+    'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+  },
+  'moreRich': {
+    'buttons': ['insertLink', 'insertImage', 'insertVideo','insertFile', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly', 'insertHR']
+  },
+  'moreMisc': {
+    'buttons': ['undo', 'redo', 'fullscreen', 'print', 'getPDF', 'spellChecker', 'selectAll', 'html'],
+    'align': 'right',
+    'buttonsVisible': 2
+  }
+},
+ imageUploadURL: '<%=upload_image_path%>',
+  imageUploadParams: {
+        id: 'my_editor'
+      },
+      videoUploadURL: '/upload_video',
+
+      videoUploadParams: {
+        id: 'my_editor2'
+      },
+        fileUploadURL: '/upload_file',
+
+      fileUploadParams: {
+        id: 'my_editor3'
+      }
+
+  
+
+
+    
+  });
+</script>
+     
+ 
+

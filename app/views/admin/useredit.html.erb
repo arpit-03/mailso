@@ -1,0 +1,147 @@
+<div class='pagec'><h3 class='pheader'>Edit User</h3>
+<div class='tablec'>
+<table id='rtable' data-turbolinks="false" class="table table-striped table-bordered display responsive no-wrap" style="width:100%">
+  <div id='ico'>
+	<div id='del' class='marg linkpg ll' style='cursor: pointer;'><a style='color: #969dab'><i class="fa fa-minus-circle "></i></a></div>
+	<div class="linkpg marg ll"><a href="<%=user_path%>" ><i class="fa fa-plus-circle "></i>
+  </a></div>
+  
+	<thead>
+		<th class='headgrey'><input type="checkbox" id="selectall"> Select All</th>
+		<th class='headgrey'>Id</th>
+		<th class='headgrey'>Username</th>
+		<th class='headgrey'>Image</th>
+
+		
+		
+	</thead>
+	<tbody>
+	</tbody>
+     <tfoot class="text-primary">
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            
+        </tr>
+    </tfoot>
+</table>
+
+<script>
+    $(document).ready(function(){
+var table= $('#rtable').DataTable({
+  "processing": true,
+        "serverSide": true,
+        "responsive": true,
+         "select": true,
+        "ajax": "<%=@basel%>/api/v1/admin/useredit/m",
+   "columns": [
+            { "data": "DT_RowId" },
+            { "data": "id" },
+            { "data": "username" },
+            { "data": "image" },
+            ],
+            "columnDefs": [
+          {
+   'targets': 0,
+   'searchable':false,
+   'orderable':false,
+   'className': 'dt-body-center',
+   'render': function (data, type, full, meta){
+       return '<input type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
+   }
+ },
+ {
+  'targets': 3,
+   'searchable':false,
+   'orderable':false,
+ }
+   
+
+            
+        ],
+ 
+ 'order': [[1, 'asc']],
+});
+
+$('#selectall').on('click', function(){
+   // Get all rows with search applied
+   var el = $('#selectall').get(0);
+   var rows = table.rows({ 'search': 'applied' }).nodes();
+   console.log(rows);
+   if(el.checked==true){
+   
+   // Check/uncheck checkboxes for all rows in the table
+   $('input[type="checkbox"]', rows).prop('checked', this.checked);
+   for(let i=0 ; i<rows.length;++i){
+    if(!$('#'+rows[i].id).hasClass('selected'))
+    $('#'+rows[i].id).toggleClass('selected');
+   }
+  }
+  else{
+    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+ for(let i=0 ; i<rows.length;++i){
+    if($('#'+rows[i].id).hasClass('selected'))
+    $('#'+rows[i].id).toggleClass('selected');
+   }
+  }
+});
+$('#rtable tbody').on('change', 'input[type="checkbox"]', function(){
+   // If checkbox is not checked
+   if(!this.checked){
+      var el = $('#selectall').get(0);
+      // If "Select all" control is checked and has 'indeterminate' property
+      if(el.checked==true)
+      el.checked=false;
+     
+       $('#'+this.value).toggleClass('selected');
+      }
+   
+   else{
+    $('#'+this.value).toggleClass('selected');
+   }
+});
+ $('#del').on( 'click', function () {
+if (confirm('Are you sure you want to delete rows')) {
+    // Save it!
+
+    // Do nothing!
+
+  var t=$('.selected');
+  var t1=[];
+  for(let i=0 ; i<t.length;++i){
+t1[i]=t[i].id
+  }
+  $.ajax({
+    
+    url: '<%=userdel_path%>' ,
+    
+    data: {
+      'id': t1
+    },
+    
+    success: function(){
+ table.row( '.selected' ).remove().draw();
+
+new Noty({
+  type:'success',
+    text: 'User deletion successfull',
+    timeout: 2000,
+    animation: {
+        open: 'animated bounceInRight', // Animate.css class names
+        close: 'animated bounceOutRight' // Animate.css class names
+    }
+}).show();
+    },
+  });}
+    } );
+
+    });
+    document.addEventListener("turbolinks:before-cache", function() {
+  if (table !== null) {
+   table.destroy();
+   table = null;
+  }
+});
+  </script>

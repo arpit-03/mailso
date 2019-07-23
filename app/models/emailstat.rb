@@ -1,0 +1,3 @@
+class Emailstat < ApplicationRecord
+
+end

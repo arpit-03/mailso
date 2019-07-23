@@ -1,0 +1,52 @@
+<div class='pagec'>
+<div class='login login1'>
+<%=form_for @user , url: create_user_path, method:'post' do |f|%>
+
+<div class='form-group'>
+<h1 style="color:#bbc4c5">Create User</h1>
+<br>
+<%=f.text_field :username, id: "usern",class:'form-control',placeholder:'Username'%>
+<%if session[:exist_user_a]%>
+<p class="red">*Username Exists</p>
+<%end%>
+</div>
+<br>
+<div class='form-group'>
+
+<%=f.password_field :password,class:'form-control',placeholder:'Password' %><br>
+
+
+</div>
+<div style="display: flex;width: 100%;overflow: hidden;"><button type="button" id="file2" style="    color: #655d5d;
+    font-size: 14px;
+    font-weight: 800;
+">Upload Profile Picture</button><div id="b1" style="overflow: hidden;width: 44%;"><p id="b2"></p></div>
+</div>
+<%= f.file_field :avatar ,class:'filefield' ,id: 'filefield1'%>
+
+<br>
+<br>
+<%=f.submit"Create",class:'btn btn-info'%>
+<%end%>
+</div>
+</div>
+<script >
+	$('#file2').on('click',function(){
+
+$('#filefield1').click();
+
+	})
+	$('#filefield1').on('change',function(){
+		$('#b2').remove();
+		$('#b1').append("<p id='b2'></p>");
+		var a=$('#filefield1')[0].value;
+		var b="";
+		for(let i=0;i<a.length;i++){
+			if(a.charCodeAt(i)!=92)
+			b=b+a[i];
+		else
+		b="";
+		}
+$('#b2').append(b);
+	})
+</script>>

@@ -1,0 +1,5 @@
+$('#top').remove();
+var newdata=$('<%=escape_javascript render "wall", id: @id%>');
+
+$('#top1').append(newdata);
+

@@ -1,0 +1,20 @@
+<div id='bg1'>
+	<%c=rand(Sub.where(status:1).size)+1%>
+<%b=Sub.offset(c).first%>
+
+<p style='    color: white;
+    padding-left: 40px;
+        padding-top: 30px;
+
+    /* padding-top: 10%; */
+    width: 30vw;'><%=b.sh_desc%></p>
+    <div style='    height: 10vh;
+    width: 15vh;background-color:#ffffff40;border-radius: 24%;margin-left: 30px;'>
+    <%if current_page?(controller: 'user' , action:'index')%>
+    <%=link_to "Know More", change_index_path(b.id) ,method: :post, remote: :true,id: 'll5'%>
+    <%else%>
+    <%=link_to "Know More", redirect_to_index_path(b.id) ,method: :post, remote: :true,id: 'll5'%>
+    <%end%>
+</div>
+
+</div>

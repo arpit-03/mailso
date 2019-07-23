@@ -1,0 +1,396 @@
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Distproject</title>
+      <%= csrf_meta_tags %>
+      <%= csp_meta_tag %>
+
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+     
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/css/plugins/colors.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/css/plugins/image_manager.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/css/plugins/image.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/css/plugins/table.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/css/plugins/video.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+      <!-- Include the plugin CSS file. -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/css/plugins/code_view.min.css">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/css/plugins/char_counter.min.css">
+     <%= favicon_link_tag asset_path('fav.png') %>
+    </head>
+
+    <body style='background-color: #37302a; '>
+    
+      <%if @admin==true%>
+      <%if session[:a_login_id]%>
+     <div id='cage'>
+      <div id='sidebarc'>
+        <ul>
+          <li><img src='/assets/dc.png' style='width:85%'></li>
+          <li><a href="<%=home_path%>"><i class="fa fa-home fa-2x"></i><br>Home</a></li>
+          <li><a href='<%=page_path%>'><i class="fa fa-file-alt fa-2x"></i><br>Pages</a></li>
+          <li><a href='<%=requests_path%>'><i class="fas fa-exclamation-circle fa-2x"></i><br>Requests</a></li>
+          <li style='cursor: pointer'><i id='usr1' class="fa fa-user fa-2x"></i><br>User
+    <div id='ddownmenu2'>
+      <ul id='ddownlist2'>
+        <li><a href='<%=user_path%>'>Add</a></li>
+        <li><a href="<%=useredit_path%>">Edit</a></li>
+      </ul>
+
+    </div>
+          </li>
+        </ul>
+
+      </div>
+      <div id='sidebar'>
+      <ul id='slist'>
+        <li style='padding-left: 1vw;
+        padding-right: 1vw;'><img src='/assets/d.png' style="width: 86%;"> </li><br>
+        <div id='slist2'>
+        <li><div id='d1'>
+          <div id="d2"><img  src='/assets/u.jpg' style='width:90%; border-radius: 50%'></div>
+          <div id='d3'>
+            <div id='d4'><span style='font-size: 13px'>Welcome,</span></div>
+            <div id='d5'><h2 style='font-size: 14px'><b><%=Admin.find(session[:a_login_id]).username.upcase%></b></h2></div>
+          </div>
+        </div></li>
+        <div id='sidebar-down'>
+        <li><h2 style='font-size:14px;'>General</h2></li>
+        <li><a href="<%=home_path%>"><i class="fa fa-home"></i>&nbsp&nbsp&nbsp Home</a></li>
+        <li><i class="fa fa-file-alt"></i><a href='<%=page_path%>'>&nbsp&nbsp&nbsp&nbsp Pages</a></li>
+        
+        <div id='dropdiv'>
+        <li id='ddownl'> <div id='ddown1'><div class='ddown' ><div class='ldown'><i class="fa fa-user"></i><a style="cursor: pointer">&nbsp&nbsp&nbsp User</a></div> <div class='rdown'><i class="fas fa-chevron-down" id='ddarrow' style='font-size: 10px;'></i></div></div></div></li>
+        <div id='ddownmenu'>
+          <ul id='ddown2' style='list-style: none; '>
+            <li><a href='<%=user_path%>'>Add</a></li>
+            <li><a href='<%=useredit_path%>'>Edit</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <li><i class="fas fa-exclamation-circle"></i><a href='<%=requests_path%>'>&nbsp&nbsp&nbsp Requests</a></li>
+    </div>
+    </div>
+      </ul>
+
+    </div>
+    <div id='upbar'>
+    <div id='bars'>
+
+    <i class="fas fa-bars fa-2x" style='font-size: 26px;color:#5a738e'></i>
+    </div>
+    <div id='req2'>
+      <ul>
+        
+      <li style='margin-left: 20px;'><img src='/assets/u.jpg' style='width:33px;border-radius: 50%'></li>
+      
+      
+      <li style='margin-left: 20px;'> <%=Admin.find(session[:a_login_id]).username.upcase%></li>
+<li style="margin-left: 20px"><a href="<%=admin_logout_path%>">Sign Out</a></li>
+    </ul>
+    </div>
+
+    </div>
+    </div>
+      <%end%>
+      <%= yield %>
+      <%end%>
+
+
+
+      <%if @user==true%>
+      <div id='backg'>
+    <div id='navbara'>
+    
+    
+      <ul id='lis'>
+      <div id='lis1'>
+      <li><i class="fa fa-rocket fa-2x"></i></li>
+      <li><h1 id='headingu'>MailJet</h1></li>
+    </div>
+
+    <%if current_page?(controller: 'user' , action:'index')%>
+    <div id='lis2'>
+      
+<%c=Sub.where(status:1).size%>
+<%if c<6%>
+<%Sub.where(status:1).each do |s|%>
+<li><%=link_to s.page_name, change_index_path(s.id) ,method: :post, remote: :true%></li>
+<%end%>
+<%else%>
+<%Sub.where(status:1).limit(5).each do |s|%>
+<li><%=link_to s.page_name, change_index_path(s.id) ,method: :post, remote: :true%></li>
+<%end%>
+<li id='more3'>More..</li>
+<div id='ddownmu'>
+  <%Sub.where(status:1).offset(5).each do |s|%>
+<li style='text-align: center'><%=link_to s.page_name, change_index_path(s.id) ,method: :post, remote: :true%></li>
+<%end%>
+</div>
+<%end%>
+</div>
+<%else%>
+
+   <div id='lis2'>
+      
+<%c=Sub.where(status:1).size%>
+<%if c<6%>
+<%Sub.where(status:1).each do |s|%>
+<li><%=link_to s.page_name, redirect_to_index_path(s.id),method: :post %></li>
+<%end%>
+<%else%>
+<%Sub.where(status:1).limit(5).each do |s|%>
+<li><%=link_to s.page_name, redirect_to_index_path(s.id),method: :post %></li>
+<%end%>
+<li id='more3'>More..</li>
+<div id='ddownmu'>
+  <%Sub.where(status:1).offset(5).each do |s|%>
+<li style='text-align: center'><%=link_to s.page_name, redirect_to_index_path(s.id) ,method: :post%></li>
+<%end%>
+</div>
+<%end%>
+
+    </div>
+    <%end%>
+  
+  <div id='lis3'>
+    <ul style='list-style: none;
+    display: flex;
+    justify-content: space-around;width:20vw;padding:0'>
+      <%if @current_user_id%>
+      <%if User.find(@current_user_id).avatar.attached?%>
+<li><%=image_tag User.find(@current_user_id).avatar,id: 'picp'%></li>
+<%else%>
+  <li><img id='picp' src='/assets/u.jpg'></li>
+<%end%>
+<div id='pddownm'>
+  <ul style="    list-style: none;
+    padding: 0;">
+   <li><%=User.find(@current_user_id).username.upcase%></li>
+    <li><a href='<%=email_path%>'>Email Center</li>
+     <li><%=link_to 'Sign Out', logout_path,method: :post, remote: :true%></li>
+  </ul>
+  </div>
+
+<%else%>
+<li><%=link_to 'Login', login_path%></li>
+
+<%end%>
+</ul>
+</div>
+</ul>
+    </div>
+
+<%= yield %>
+<div style='height:20vh;background-color: #1f1f1f;  '>
+  <p style='    color: white;
+    font-size: larger;
+    padding-left: 2%;
+    padding-top: 2%;'>Follow Us On Social Networks</p>
+<div style='   color: white;
+    display: flex;
+    justify-content: space-between;    align-items: center;'>
+<div>
+  <ul style="    justify-content: space-around;
+    list-style: none;
+    display: flex;
+    padding-left: 4vw;
+    width: 22vw;">
+  <li><i class="fab fa-facebook-square fa-2x"></i></li>
+  <li><i class="fab fa-google-plus-square fa-2x"></i></li>
+  <li><i class="fab fa-instagram fa-2x"></i></li>
+  <li><i class="fab fa-twitter-square fa-2x"></i></li>
+  </ul>
+  </div>
+  <div>
+    <p style='padding-right: 10%;width:20vw'>Copyright with MailJEt</p>
+  </div>
+</div>
+</div>
+</div>
+
+   
+    <%end%>
+    
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/js/plugins/colors.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/js/plugins/char_counter.min.js"></script>
+    <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/js/plugins/image_manager.min.js></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/js/plugins/image.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/js/plugins/video.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/js/plugins/url.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/js/plugins/table.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+    <!-- Include the plugin JS file. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/3.0.0/js/plugins/code_view.min.js"></script>
+
+    <script>
+
+    $('.ddown').on('click',function(){
+      var a=$('#dropdiv')[0].classList.toggle('active');
+    if(a){
+      $('#ddownl').addClass('listclicked');
+    $('#ddownmenu')[0].style.maxHeight= $('#ddownmenu')[0].scrollHeight+ 'px'  ;
+    }
+    else{
+      $('#ddownl').removeClass('listclicked');
+    $('#ddownmenu')[0].style.maxHeight= null;
+    }
+      
+    });
+    var c=0;
+    $('#bars').on('click',function(){
+      var a=$('#bars')[0].classList.toggle('off');
+      if(a){
+        
+
+    $('#sidebar')[0].style.width= 0+'px';
+    $('.pagec')[0].style.marginLeft='6vw'
+    $('#upbar')[0].style.marginLeft='6vw';
+    $('#upbar')[0].style.width='94vw';
+    $('#sidebarc')[0].style.display='block';
+      }
+      else{
+    $('#sidebar')[0].style.width='15vw';
+    $('.pagec')[0].style.marginLeft='15vw'
+    $('#upbar')[0].style.marginLeft='15vw';
+    $('#upbar')[0].style.width='85vw';
+    $('#sidebarc')[0].style.display='none';
+      }
+    });
+
+    $('#usr1').on('click',function(){
+      var a=$('#usr1')[0].classList.toggle('active');
+      if(a){
+        $('#ddownlist2')[0].style.top= $('#usr1')[0].offsetTop+ 'px';
+        $('#ddownlist2')[0].style.maxHeight='100px';
+      }
+      else
+      {
+        $('#ddownlist2')[0].style.maxHeight='0px';
+      }
+    });
+    $('#barsu').on('click',function(){
+      var a=$('#barsu')[0].classList.toggle('off');
+      if(a){
+        
+
+    $('#sidebaru')[0].style.width= 0+'px';
+    $('.pagec')[0].style.marginLeft='6vw'
+    $('#upbaru')[0].style.marginLeft='6vw';
+    $('#upbaru')[0].style.width='94vw';
+    $('#sidebarcu')[0].style.display='block';
+      }
+      else{
+    $('#sidebaru')[0].style.width='15vw';
+    $('.pagec')[0].style.marginLeft='15vw'
+    $('#upbaru')[0].style.marginLeft='15vw';
+    $('#upbaru')[0].style.width='85vw';
+    $('#sidebarcu')[0].style.display='none';
+      }
+    });
+    var b=0;
+    $('.more').on('click',function(){
+      var a=$('.more')[0].classList.toggle('active');
+    if (a)
+      {b=b+1;
+      $('#usermenu')[0].style.maxHeight='70vh';
+    }
+    else
+       $('#usermenu')[0].style.maxHeight='0vh';
+      event.stopPropagation();
+    });
+    $('#usermenu').on('click',function(){
+     
+      if ($('.more').hasClass('active')){
+        $('.more')[0].classList.toggle('active');
+        $('#usermenu')[0].style.maxHeight='0vh';
+      }
+    });
+    $('#more2').on('click',function(){
+      var a=$('#more2')[0].classList.toggle('active');
+    if (a)
+      {
+      $('#usermenu2')[0].style.maxHeight='70vh';
+    }
+    else
+       $('#usermenu2')[0].style.maxHeight='0vh';
+       event.stopPropagation();
+    });
+    $(document).on('click',function(){
+     
+      if ($('#more2').hasClass('active')){
+       var a=$('#more2')[0].classList.toggle('active');
+        $('#usermenu2')[0].style.maxHeight='0vh';
+
+      }
+    });
+    $('#more3').on('click',function(){
+      var a=$('#more3')[0].classList.toggle('active');
+      if(a){
+        $('#ddownmu')[0].style.left=$('#more3')[0].offsetLeft+'px';
+        $('#ddownmu')[0].style.maxHeight='30vh';
+
+      }
+      else
+      {
+        $('#ddownmu')[0].style.maxHeight='0vh';
+      }
+       event.stopPropagation();
+    });
+    $(document).on('click',function(){
+     
+      if ($('#more3').hasClass('active')){
+       var a=$('#more3')[0].classList.toggle('active');
+        $('#ddownmu')[0].style.maxHeight='0vh';
+
+      }
+    });
+   $('#picp').on ('click',function(){
+var a=$('#picp')[0].classList.toggle('active');
+if(a){
+  // $('#pddownm')[0].style.display='block';
+        $('#pddownm')[0].style.top=$('#navbara')[0].offsetHeight+'px';
+      
+ $('#pddownm')[0].style.maxHeight='16vh';
+      }
+      else
+      {
+       
+        $('#pddownm')[0].style.maxHeight='0vh';
+      }
+       event.stopPropagation();
+   });
+    $(document).on('click',function(){
+     
+      if ($('#picp').hasClass('active')){
+       var a=$('#picp')[0].classList.toggle('active');
+        $('#ddownmu')[0].style.maxHeight='0vh';
+// $('#pddownm')[0].style.display='none';s
+      }
+    });
+    </script>
+
+    </body>
+    </html>

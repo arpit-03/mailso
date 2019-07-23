@@ -1,0 +1,40 @@
+<div id="meh" style="background-color: #ffffff00;min-height:100vh;padding: 6%;">
+	 <div style="padding: 4%; background-color: white;border-radius: 5px">
+<%if Request.find(@id).userid==@current_user_id%>
+<%if @d==0 && @b==0 && @o==0 && @c==0 %>
+<div class='notavailable'>
+<h1>NOT AVAILABLE <i class="fas fa-exclamation-circle"></i></h1>
+</div>
+<%else%>
+<div class="flex12" style="    display: flex;
+    justify-content: space-around;margin-bottom: 40px">
+    <div style='    display: flex;
+    justify-content: space-around;
+    flex-direction: column;'>
+<div  class="topcard1"><h2>Sent</h2><div class='minicards'><i class="fas fa-paper-plane"></i><p><%=@s%></p></div></div>
+<div  class="topcard1"><h2>Delivered</h2><div class='minicards'><i class="fas fa-truck"></i><p><%=@d%></p></div></div>
+</div>
+	<%= pie_chart [ ["Delivered",@d],["Bounced", @b],["opened",@o],["clicked",@c]] %>
+</div>
+<%end%>
+<h3 style=    "font-size: 20px;
+    border-bottom: 1px solid #b6b5c7;">EMAIL CONTACT LIST</h3>
+    <table class="undettable">
+    <thead>
+    	<th>Emails</th>
+    </thead>
+    <tbody>
+<%@csv.by_col[0].each do |row|%>
+<tr>
+<td><%=row%><br></td>
+</tr>
+<%end%>
+</tbody>
+</table>
+<%else%>
+<div style="display: flex;align-items: baseline;">
+<i class="fas fa-exclamation-triangle" style="color: red;font-size: 32px"></i><h1 style=";font-size: 32px"> &nbspUnauthorized Access</h1>
+</div>
+<%end%>
+</div>
+</div>
